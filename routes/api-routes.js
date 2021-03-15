@@ -26,6 +26,15 @@ module.exports =(app) => {
         Workout.findOneAndUpdate({_id:req.params.id}, {$push: {exercise:req.body}},{new:true})
     })
 
+    app.get("/api/workouts/range",(req,res) => {
+        Workout.find({})
+        .then(dbWorkout => {
+            res.json(dbWorkout)
+        })
+        .catch(err => {
+            res.status(err)
+        })
+    })
 }
 
 
