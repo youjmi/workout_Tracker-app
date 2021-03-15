@@ -3,6 +3,7 @@ const Workout = require("../models/workout");
 module.exports =(app) => {
 
     app.get("/api/workouts", (req,res) =>{
+        console.log("testing GET method here")
         Workout.find({})
         .then(dbWorkout => {
             res.json(dbWorkout)
@@ -13,7 +14,8 @@ module.exports =(app) => {
     });
 
     app.post("/api/workouts",(req,res)=>{
-        Workout.create({exercise: [req.body]})
+        console.log("testing POST Method here")
+        Workout.create({exercises: [req.body]})
         .then(dbWorkout => {
             res.json(dbWorkout)
         })
@@ -23,7 +25,8 @@ module.exports =(app) => {
     });
     
     app.put("/api/workouts/:id",(req,res)=>{
-        Workout.findOneAndUpdate({_id:req.params.id}, {$push: {exercise:req.body}},{new:true})
+        console.log("testing PUT Method here")
+        Workout.findOneAndUpdate({_id:req.params.id}, {$push: {exercises:[req.body]}},{new:true})
     })
 
     app.get("/api/workouts/range",(req,res) => {
