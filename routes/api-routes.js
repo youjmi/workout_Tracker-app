@@ -10,7 +10,7 @@ module.exports =(app) => {
             },
             {
                 $addFields: {
-                    sumDuration: {
+                    totalDuration: {
                         $sum: "$excercise.duration",
                     }
                 }
@@ -50,7 +50,7 @@ module.exports =(app) => {
             },
             {
                 $addFields: {
-                    sumDuration: {
+                    totalDuration: {
                         $sum: "$exercise.duration"
                     }
                 }
