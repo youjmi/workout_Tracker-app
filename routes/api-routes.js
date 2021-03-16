@@ -4,7 +4,20 @@ module.exports =(app) => {
 
     app.get("/api/workouts", (req,res) =>{
         console.log("testing GET method here")
-        Workout.find({})
+        Workout.aggregate([
+            {
+                $limit: 7,
+            },
+            {
+                $addFields: {
+                    sumDuration: {
+                        $sum: "$excercise.duration",
+                    }
+                }
+            },
+        ])
+
+
         .then(dbWorkout => {
             res.json(dbWorkout)
         })
@@ -13,9 +26,10 @@ module.exports =(app) => {
         })
     });
 
-    app.post("/api/workouts",(req,res)=>{
+    app.post("/api/workouts",(body,res)=>{
         console.log("testing POST Method here")
-        Workout.create({exercises: [req.body]})
+        Workout.create({body})
+
         .then(dbWorkout => {
             res.json(dbWorkout)
         })
@@ -25,12 +39,23 @@ module.exports =(app) => {
     });
     
     app.put("/api/workouts/:id",(req,res)=>{
-        console.log("testing PUT Method here")
-        Workout.findOneAndUpdate({_id:req.params.id}, {$push: {exercises:[req.body]}},{new:true})
+        console.log("testing PUT")
+        Workout.findOneAndUpdate({_id:req.params.id}, {$push: {exercise:req.body}},{new:true},)
     })
 
     app.get("/api/workouts/range",(req,res) => {
-        Workout.find({})
+        Workout.aggregate ([
+            {
+                $limit: 7
+            },
+            {
+                $addFields: {
+                    sumDuration: {
+                        $sum: "$exercise.duration"
+                    }
+                }
+            },
+        ])
         .then(dbWorkout => {
             res.json(dbWorkout)
         })
