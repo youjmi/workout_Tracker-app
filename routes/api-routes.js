@@ -1,8 +1,9 @@
+const { isValidObjectId } = require("mongoose");
 const Workout = require("../models/workout");
 
-module.exports =(app) => {
+module.exports = (app) => {
 
-    app.get("/api/workouts", (req,res) =>{
+    app.get("/api/workouts", (req, res) => {
         console.log("testing GET method here")
         Workout.aggregate([
             {
@@ -18,33 +19,47 @@ module.exports =(app) => {
         ])
 
 
-        .then(dbWorkout => {
-            res.json(dbWorkout)
-        })
-        .catch(err => {
-            res.status(400).json(err)
-        })
+            .then(dbWorkout => {
+                res.json(dbWorkout)
+            })
+            .catch(err => {
+                res.status(400).json(err)
+            })
     });
 
-    app.post("/api/workouts",(body,res)=>{
+    //app.post("/api/workouts",(req,res))
+    app.post("/api/workouts", (body, res) => {
         console.log("testing POST Method here")
-        Workout.create({body})
 
+        //Workout.create({[exercise: req.body]}) only asses extra Id as field. not the Rest
+        Workout.create(body)
+            .then(dbWorkout => {
+                res.json(dbWorkout)
+            })
+            .catch(err => {
+                res.status(400).json(err)
+            })
+    });
+
+
+    app.put("/api/workouts/:id", (req, res) => {
+        console.log("testing PUT")
+        console.log(req.body)
+
+        Workout.findOneAndUpdate({ _id: req.params.id }, { $push: { exercise: req.body}},
+            
+        )
         .then(dbWorkout => {
             res.json(dbWorkout)
         })
         .catch(err => {
-            res.status(400).json(err)
+            res.status(err)
         })
-    });
-    
-    app.put("/api/workouts/:id",(req,res)=>{
-        console.log("testing PUT")
-        Workout.findOneAndUpdate({_id:req.params.id}, {$push: {exercise:req.body}},{new:true},)
+
     })
 
-    app.get("/api/workouts/range",(req,res) => {
-        Workout.aggregate ([
+    app.get("/api/workouts/range", (req, res) => {
+        Workout.aggregate([
             {
                 $limit: 7
             },
@@ -56,12 +71,12 @@ module.exports =(app) => {
                 }
             },
         ])
-        .then(dbWorkout => {
-            res.json(dbWorkout)
-        })
-        .catch(err => {
-            res.status(err)
-        })
+            .then(dbWorkout => {
+                res.json(dbWorkout)
+            })
+            .catch(err => {
+                res.status(err)
+            })
     })
 }
 

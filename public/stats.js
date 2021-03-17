@@ -195,7 +195,7 @@ function workoutNames(data) {
   let workouts = [];
 
   data.forEach((workout) => {
-    workout.exercises.forEach((exercise) => {
+    workout.exercise.forEach((exercise) => {
       workouts.push(exercise.name);
     });
   });
