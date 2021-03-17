@@ -7,7 +7,7 @@
   * [Installation](#installation)
   * [Usage](#usage)
   * [Contribution](#contribution)
-  * [License] (#license)
+  * [License](#license)
 
  
  ## Description
