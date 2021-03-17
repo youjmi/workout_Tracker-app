@@ -12,7 +12,7 @@ module.exports = (app) => {
             {
                 $addFields: {
                     totalDuration: {
-                        $sum: "$excercise.duration",
+                        $sum: "$exercise.duration"
                     }
                 }
             },
@@ -43,30 +43,30 @@ module.exports = (app) => {
 
 
     app.put("/api/workouts/:id", (req, res) => {
-        Workout.findOneAndUpdate({ _id: req.params.id }, { $push: { exercise: req.body}}, {new:true},
-            
+        Workout.findOneAndUpdate({ _id: req.params.id }, { $push: { exercise: req.body } }, { new: true },
+
         )
-        .then(dbWorkout => {
-            res.json(dbWorkout)
-        })
-        .catch(err => {
-            res.status(err)
-        })
+            .then(dbWorkout => {
+                res.json(dbWorkout)
+            })
+            .catch(err => {
+                res.status(err)
+            })
 
     })
 
     app.get("/api/workouts/range", (req, res) => {
-        Workout.aggregate([
-            {
-                $limit: 7
-            },
-            {
-                $addFields: {
-                    totalDuration: {
-                        $sum: "$exercise.duration"
-                    }
+        Workout.aggregate([{ $limit: 7 },
+        {
+            $addFields: {
+                totalDuration: {
+                    $sum: "$exercise.duration"
+
                 }
-            },
+            }
+
+        },
+
         ])
             .then(dbWorkout => {
                 res.json(dbWorkout)
@@ -75,6 +75,11 @@ module.exports = (app) => {
                 res.status(err)
             })
     })
+
+
+
+
+    
 }
 
 
