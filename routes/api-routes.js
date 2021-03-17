@@ -45,7 +45,6 @@ module.exports = (app) => {
 
     app.put("/api/workouts/:id", (req, res) => {
         Workout.findOneAndUpdate({ _id: req.params.id }, { $push: { exercise: req.body } }, { new: true },
-
         )
             .then(dbWorkout => {
                 res.json(dbWorkout)
