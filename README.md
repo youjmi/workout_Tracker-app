@@ -14,7 +14,9 @@
 
  Welcome! For this assignment, I created a workout tracker. This assignment requires me to create Mongo database with a Mongoose schema and handle routes with Express. For a user, he/she will want to be able to view create, track daily workout and log multiple exercises in a workout on a given day. The user is also be able to track the name, type, weight, sets, reps, and duration of exercise. If the exercise is a cardio exercise, he/she should be able to track the distance traveled. This product will help the consumer reach their fitness goals more quickly when they track their workout progress.
 
- Deployed Link: 
+ Deployed Link: https://rocky-falls-71528.herokuapp.com/
+
+ Github Link: https://github.com/youjmi/workout_Tracker-app
 
  ## Installation
 
