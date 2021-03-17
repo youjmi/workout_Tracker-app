@@ -12,9 +12,9 @@ module.exports = (app) => {
                     totalDuration: {
                         $sum: "$exercise.duration"
                     },
-                    totalDistance: {
-                        $sum: "$exercise.distance"
-                    },
+                    // totalDistance: {
+                    //     $sum: "$exercise.distance"
+                    // },
                 }
             },
         ])
