@@ -6,9 +6,7 @@ module.exports = (app) => {
     app.get("/api/workouts", (req, res) => {
         console.log("testing GET method here")
         Workout.aggregate([
-            {
-                $limit: 7,
-            },
+            {$limit: 7},
             {
                 $addFields: {
                     totalDuration: {
