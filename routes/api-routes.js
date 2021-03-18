@@ -1,8 +1,9 @@
-const { isValidObjectId } = require("mongoose");
 const Workout = require("../models/workout");
 
 module.exports = (app) => {
 
+
+    //app.get callback function routing with HTTP GET request to retrieve data
     app.get("/api/workouts", (req, res) => {
         console.log("testing GET method here")
         Workout.aggregate([
@@ -19,7 +20,6 @@ module.exports = (app) => {
             },
         ])
 
-
             .then(dbWorkout => {
                 res.json(dbWorkout)
             })
@@ -28,11 +28,10 @@ module.exports = (app) => {
             })
     });
 
-    //app.post("/api/workouts",(req,res))
+    //app.post sending data to server 
     app.post("/api/workouts", (body, res) => {
         console.log("testing POST Method here")
 
-        //Workout.create({[exercise: req.body]}) only asses extra Id as field. not the Rest
         Workout.create(body)
             .then(dbWorkout => {
                 res.json(dbWorkout)
@@ -42,7 +41,7 @@ module.exports = (app) => {
             })
     });
 
-
+    //app.put replacing or updating current data of its targeted resource. In this case, ID
     app.put("/api/workouts/:id", (req, res) => {
         Workout.findOneAndUpdate({ _id: req.params.id }, { $push: { exercise: req.body } }, { new: true },
         )
@@ -55,6 +54,7 @@ module.exports = (app) => {
 
     })
 
+    //app.get callback function routing with HTTP GET request to retrieve data
     app.get("/api/workouts/range", (req, res) => {
         Workout.aggregate([{ $limit: 7 },
         {
